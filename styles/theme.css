@@ -20,6 +20,10 @@
     @apply bg-light-800 dark:dark-gradient;
   }
 
+  .background-slate100_darkgradient {
+    @apply bg-slate-100 dark:dark-gradient;
+  }
+
   .background-light800_dark400 {
     @apply bg-light-800 dark:bg-dark-400 !important;
   }
@@ -34,6 +38,10 @@
 
   .background-light800_dark400 {
     @apply bg-light-800 dark:bg-dark-400;
+  }
+
+  .background-slate200_dark300 {
+    @apply bg-slate-200 dark:bg-dark-300;
   }
 
   .background-light800_dark300 {
