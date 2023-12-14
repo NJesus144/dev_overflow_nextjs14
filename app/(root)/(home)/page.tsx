@@ -1,11 +1,68 @@
 import HomeFilter from "@/components/home/HomeFilter";
-import CardAnswers from "@/components/shared/CardAnswers";
+import QuestionCard from "@/components/shared/cards/QuestionCard";
 import Filter from "@/components/shared/Filter";
+import NoResult from "@/components/shared/NoResult";
 
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import Link from "next/link";
+
+const questions = [
+  {
+    _id: "1",
+    title:
+      "Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?",
+    tags: [
+      { _id: "1", name: "Python" },
+      { _id: "2", name: "React" },
+    ],
+    author: {
+      _id: "1",
+      name: "John Doe",
+      picture: "url_da_imagem_john_doe",
+    },
+    upvotes: 10,
+    views: 100,
+    answers: [],
+    createdAt: new Date("2023-09-01T12:00:00.000Z"),
+  },
+  {
+    _id: "2",
+    title: "How to center a div?",
+    tags: [
+      { _id: "3", name: "CSS" },
+      { _id: "4", name: "SQL" },
+    ],
+    author: {
+      _id: "1",
+      name: "John Doe",
+      picture: "url_da_imagem_john_doe",
+    },
+    upvotes: 10,
+    views: 100,
+    answers: [],
+    createdAt: new Date("2021-09-01T12:00:00.000Z"),
+  },
+  {
+    _id: "3",
+    title:
+      "Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?",
+    tags: [
+      { _id: "1", name: "Python" },
+      { _id: "2", name: "React" },
+    ],
+    author: {
+      _id: "1",
+      name: "John Doe",
+      picture: "url_da_imagem_john_doe",
+    },
+    upvotes: 10,
+    views: 100,
+    answers: [],
+    createdAt: new Date("2021-09-01T12:00:00.000Z"),
+  },
+];
 
 export default function Home() {
   return (
@@ -13,7 +70,7 @@ export default function Home() {
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
         <h1 className="h1-bold text-dark100_light900">All Questions</h1>
 
-        <Link href="/ask-questions" className="flex justify-end max-sm:w-full">
+        <Link href="/ask-question" className="flex justify-end max-sm:w-full">
           <Button className=" primary-gradient min-h-[46px] px-4 py-3 !text-light-900">
             Ask a Question
           </Button>
@@ -35,9 +92,31 @@ export default function Home() {
         />
       </div>
       <HomeFilter />
-      <section>
-        <CardAnswers/>
-      </section>
+
+      <div className="mt-10 flex w-full flex-col gap-6">
+        {questions.length > 0 ? (
+          questions.map((question) => (
+            <QuestionCard
+              key={question._id}
+              _id={question._id}
+              title={question.title}
+              tags={question.tags}
+              author={question.author}
+              upvotes={question.upvotes}
+              views={question.views}
+              answers={question.answers}
+              createdAt={question.createdAt}
+            />
+          ))
+        ) : (
+          <NoResult
+            title="There´s no question to show"
+            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
+            link="/ask-question"
+            linkTitle="Ask a Question"
+          />
+        )}
+      </div>
     </>
   );
 }
