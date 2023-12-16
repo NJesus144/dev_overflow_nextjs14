@@ -20,12 +20,20 @@ import { QuestionsSchema } from "@/lib/validation";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
+import { useRouter, usePathname } from "next/navigation";
+
 
 const type: any = "create";
 
-const Question = () => {
+interface Props {
+  mongoUserId: string;
+}
+
+const Question = ({ mongoUserId }: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
@@ -41,45 +49,51 @@ const Question = () => {
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
 
+
+
     try {
       // make an async call to your API -> create a question
       // contain all form data
-      await createQuestion({});
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+      });
 
       // navigate to home page
+
+      router.push("/");
     } catch (error) {
       setIsSubmitting(false);
     }
   }
-  const handleInputKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    field: any
-  ) => {
-    if (e.key === "Enter" && field.name === "tags") {
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, field: any) => {
+    if (e.key === 'Enter' && field.name === 'tags') {
       e.preventDefault();
 
       const tagInput = e.target as HTMLInputElement;
       const tagValue = tagInput.value.trim();
 
-      if (tagValue !== "") {
-        if (tagValue.length > 15) {
-          return form.setError("tags", {
-            type: "required",
-            message: "Tag must be less than 15 characters",
-          });
+      if(tagValue !== '') {
+        if(tagValue.length > 15) {
+          return form.setError('tags', {
+            type: 'required',
+            message: 'Tag must be less than 15 characters.'
+          })
         }
 
-        if (!field.value.includes(tagValue as never)) {
-          form.setValue("tags", [...field.value, tagValue]);
-          tagInput.value = "";
-          form.clearErrors("tags");
+        if(!field.value.includes(tagValue as never)) {
+          form.setValue('tags', [...field.value, tagValue]);
+          tagInput.value = ''
+          form.clearErrors('tags');
         }
       } else {
         form.trigger();
       }
     }
-  };
-
+  }
   const handleTagRemove = (tag: string, field: any) => {
     const newTags = field.value.filter((t: string) => t !== tag);
     form.setValue("tags", newTags);
@@ -130,7 +144,9 @@ const Question = () => {
                       editorRef.current = editor;
                     }}
                     onBlur={field.onBlur}
-                    onEditorChange={(content) => {field.onChange(content)}}
+                    onEditorChange={(content) => {
+                      field.onChange(content);
+                    }}
                     initialValue=""
                     init={{
                       height: 350,
