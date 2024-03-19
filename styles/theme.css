@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,6 +5,10 @@
 @layer utilities {
   .background-light850_dark100 {
     @apply bg-light-850 dark:bg-dark-100;
+  }
+
+  .text-light900_dark100 {
+    @apply text-light-900 dark:text-dark-100;
   }
 
   .background-light900_dark200 {
@@ -18,10 +21,6 @@
 
   .background-light800_darkgradient {
     @apply bg-light-800 dark:dark-gradient;
-  }
-
-  .background-slate100_darkgradient {
-    @apply bg-slate-100 dark:dark-gradient;
   }
 
   .background-light800_dark400 {
@@ -38,10 +37,6 @@
 
   .background-light800_dark400 {
     @apply bg-light-800 dark:bg-dark-400;
-  }
-
-  .background-slate200_dark300 {
-    @apply bg-slate-200 dark:bg-dark-300;
   }
 
   .background-light800_dark300 {

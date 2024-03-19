@@ -17,13 +17,13 @@ const Navbar = () => {
           alt="DevFlow"
         />
 
-        <p className="h2-bold font-spaceGrotesk text-dark-100 dark:text-light-900">
+        <p className="h2-bold text-dark-100 dark:text-light-900 font-spaceGrotesk">
           Dev <span className="text-primary-500">Overflow</span>
         </p>
       </Link>
       <GlobalSearch />
       <div className="flex-between gap-5">
-        <Theme /> 
+        <Theme />
         <SignedIn>
           <UserButton
             afterSignOutUrl="/"
