@@ -18,7 +18,7 @@ export default async function Home() {
         <h1 className="h1-bold text-dark100_light900">All Questions</h1>
 
         <Link href="/ask-question" className="flex justify-end max-sm:w-full">
-          <Button className="primary-gradient !text-light-900 min-h-[46px] px-4 py-3">
+          <Button className="primary-gradient px-4 py-3 !text-light-900 selection:min-h-[46px]">
             Ask a Question
           </Button>
         </Link>
