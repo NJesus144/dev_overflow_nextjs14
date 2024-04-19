@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import React from "react";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
