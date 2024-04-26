@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { getTopInteractedTags } from "@/lib/actions/tag.actions";
+import { getTopInteractedTags } from "@/lib/actions/tag.action";
 import Image from "next/image";
 import Link from "next/link";
 import RenderTag from "../RenderTag";
