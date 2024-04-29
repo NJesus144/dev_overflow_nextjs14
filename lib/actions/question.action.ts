@@ -64,7 +64,7 @@ export async function createQuestion(params: CreateQuestionParams) {
   } catch (error) {}
 }
 
-export const getQuestionById = async (params: GetQuestionByIdParams) => {
+export async function getQuestionById (params: GetQuestionByIdParams) {
   try {
     connectToDatabase();
 

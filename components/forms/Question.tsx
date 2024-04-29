@@ -21,7 +21,7 @@ import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
 import { useRouter, usePathname } from "next/navigation";
-
+import { useTheme } from "@/context/ThemeProvider";
 
 const type: any = "create";
 
@@ -30,6 +30,7 @@ interface Props {
 }
 
 const Question = ({ mongoUserId }: Props) => {
+  const { mode } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -48,8 +49,6 @@ const Question = ({ mongoUserId }: Props) => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
-
-
 
     try {
       // make an async call to your API -> create a question
@@ -70,31 +69,34 @@ const Question = ({ mongoUserId }: Props) => {
     }
   }
 
-  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, field: any) => {
-    if (e.key === 'Enter' && field.name === 'tags') {
+  const handleInputKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    field: any
+  ) => {
+    if (e.key === "Enter" && field.name === "tags") {
       e.preventDefault();
 
       const tagInput = e.target as HTMLInputElement;
       const tagValue = tagInput.value.trim();
 
-      if(tagValue !== '') {
-        if(tagValue.length > 15) {
-          return form.setError('tags', {
-            type: 'required',
-            message: 'Tag must be less than 15 characters.'
-          })
+      if (tagValue !== "") {
+        if (tagValue.length > 15) {
+          return form.setError("tags", {
+            type: "required",
+            message: "Tag must be less than 15 characters.",
+          });
         }
 
-        if(!field.value.includes(tagValue as never)) {
-          form.setValue('tags', [...field.value, tagValue]);
-          tagInput.value = ''
-          form.clearErrors('tags');
+        if (!field.value.includes(tagValue as never)) {
+          form.setValue("tags", [...field.value, tagValue]);
+          tagInput.value = "";
+          form.clearErrors("tags");
         }
       } else {
         form.trigger();
       }
     }
-  }
+  };
   const handleTagRemove = (tag: string, field: any) => {
     const newTags = field.value.filter((t: string) => t !== tag);
     form.setValue("tags", newTags);
@@ -175,6 +177,8 @@ const Question = ({ mongoUserId }: Props) => {
                         "alignright alignjustify | bullist numlist ",
                       content_style:
                         "body { font-family:Inter; font-size:16px }",
+                      skin: mode === "dark" ? "oxide-dark" : "oxide",
+                      content_css: mode === "dark" ? "dark" : "light",
                     }}
                   />
                 </FormControl>
