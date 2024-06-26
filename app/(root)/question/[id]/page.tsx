@@ -3,7 +3,7 @@ import AllAnswers from "@/components/shared/AllAnswers";
 import Metric from "@/components/shared/Metric";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
- import Votes from "@/components/shared/Votes";
+import Votes from "@/components/shared/Votes";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
@@ -43,14 +43,14 @@ const Page = async ({ params, searchparams }: any) => {
             </p>
           </Link>
           <div className="flex justify-end">
-            <Votes 
+            <Votes
               type="question"
               itemId={JSON.stringify(result._id)}
               userId={JSON.stringify(mongoUser._id)}
               upvotes={result.upvotes.length}
               hasupVoted={result.upvotes.includes(mongoUser._id)}
-              downvotes={1}
-              hasdownVoted={true}
+              downvotes={result.dowvotes.length}
+              hasdownVoted={result.dowvotes.includes(mongoUser._id)}
               hasSaved={mongoUser?.saved.includes(result._id)}
             />
           </div>
@@ -98,7 +98,7 @@ const Page = async ({ params, searchparams }: any) => {
         ))}
       </div>
 
-      <AllAnswers 
+      <AllAnswers
         questionId={result._id}
         userId={JSON.stringify(mongoUser._id)}
         totalAnswers={result.answers.length}
