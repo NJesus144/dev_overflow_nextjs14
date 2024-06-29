@@ -8,6 +8,8 @@ import { getTimestamp } from "@/lib/utils";
 import ParseHTML from "./ParseHTML";
 import { Vote } from "lucide-react";
 import Votes from "./Votes";
+import { auth } from "@clerk/nextjs";
+import { getUserById } from "../../lib/actions/user.action";
 
 interface Props {
   questionId: string;
@@ -24,9 +26,15 @@ const AllAnswers = async ({
   page,
   filter,
 }: Props) => {
+  const { userId: clerkId } = auth();
+
+  let mongoUser: any = {};
+
+  if (clerkId) {
+    mongoUser = await getUserById({ userId: clerkId });
+  }
   const result = await getAnswers({ questionId });
 
-  console.log(result.answers);
 
   return (
     <div className="mt-11">
@@ -61,7 +69,16 @@ const AllAnswers = async ({
                   </div>
                 </Link>
                 <div className="flex justify-end">
-                  <Votes />
+                  <Votes
+                   type="Answer"
+                   itemId={JSON.stringify(answer._id)}
+                   userId={JSON.stringify(mongoUser._id)}
+                   upvotes={answer.upvotes.length}
+                   hasupVoted={answer.upvotes.includes(mongoUser._id)}
+                   downvotes={answer.downvotes.length}
+                   hasdownVoted={answer.downvotes.includes(mongoUser._id)}
+                   hasSaved={mongoUser?.saved.includes(answer._id)}
+                  />
                 </div>
               </div>
             </div>

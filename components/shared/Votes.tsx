@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { formatAndDivideNumber } from '../../lib/utils'
-import { downvoteQuestion, upvoteQuestion } from '../../lib/actions/question.action'
+import { downvoteAnswer, downvoteQuestion, upvoteAnswer, upvoteQuestion } from '../../lib/actions/question.action'
 import { usePathname, useRouter } from 'next/navigation'
 
 
@@ -38,7 +38,7 @@ const Votes = ({
     if (!userId) return;
 
     if (action === 'upvote') {
-      if (type === 'question') {
+      if (type === 'Question') {
         await upvoteQuestion({
           questionId: JSON.parse(itemId),
           userId: JSON.parse(userId),
@@ -47,20 +47,20 @@ const Votes = ({
           path: pathname
         })
       } else if (type === "Answer") {
-        // await upvoteAnswer({
-        //   questionId: JSON.parse(itemId),
-        //   userId: JSON.parse(userId),
-        //   hasupVoted,
-        //   hasdownVoted,
-        //   path: pathname
-        // })
+        await upvoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname
+        })
       }
       // todo: show a toast message
       return
     }
 
     if (action === 'downvote') {
-      if (type === 'question') {
+      if (type === 'Question') {
         await downvoteQuestion({
           questionId: JSON.parse(itemId),
           userId: JSON.parse(userId),
@@ -69,13 +69,13 @@ const Votes = ({
           path: pathname
         })
       } else if (type === "Answer") {
-        // await downvoteAnswer({
-        //   questionId: JSON.parse(itemId),
-        //   userId: JSON.parse(userId),
-        //   hasupVoted,
-        //   hasdownVoted,
-        //   path: pathname
-        // })
+        await downvoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname
+        })
       }
       // todo: show a toast message
       return
