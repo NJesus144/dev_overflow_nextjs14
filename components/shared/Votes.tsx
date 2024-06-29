@@ -6,6 +6,7 @@ import { formatAndDivideNumber } from '../../lib/utils'
 import { downvoteQuestion, upvoteQuestion } from '../../lib/actions/question.action'
 import { usePathname, useRouter } from 'next/navigation'
 import { downvoteAnswer, upvoteAnswer } from '../../lib/actions/answer.action'
+import { saveQuestion } from '../../lib/actions/user.action'
 
 
 interface Props {
@@ -32,7 +33,10 @@ const Votes = ({
   const pathname = usePathname()
   const router = useRouter()
 
-  const handleSave = () => { }
+  const handleSave = async(userId: string, itemId: string) => { 
+    if (!userId) return 
+    await saveQuestion({ userId: JSON.parse(userId), questionId: JSON.parse(itemId), path: pathname })
+  }
 
   const handleVote = async (action: string) => {
 
@@ -119,14 +123,16 @@ const Votes = ({
           </div>
         </div>
       </div>
-      <Image
-        src={hasSaved ? '/assets/icons/star-filled.svg' : '/assets/icons/star-red.svg'}
-        height={18}
-        width={18}
-        alt='star'
-        className='cursor-pointer'
-        onClick={handleSave}
-      />
+      {type === 'Question' && (
+        <Image
+          src={hasSaved ? '/assets/icons/star-filled.svg' : '/assets/icons/star-red.svg'}
+          height={18}
+          width={18}
+          alt='star'
+          className='cursor-pointer'
+          onClick={() => handleSave(userId, itemId)}
+        />
+      )}
     </div>
   )
 }

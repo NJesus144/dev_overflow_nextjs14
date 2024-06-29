@@ -4,7 +4,6 @@ import { connectToDatabase } from '../mogoose'
 import Question from '@/database/question.model'
 import Tag from '@/database/tag.model'
 import {
-  AnswerVoteParams,
   CreateQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
@@ -161,4 +160,3 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     throw error
   }
 }
-
