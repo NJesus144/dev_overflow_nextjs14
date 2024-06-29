@@ -6,7 +6,7 @@ import { formatAndDivideNumber } from '../../lib/utils'
 import { downvoteQuestion, upvoteQuestion } from '../../lib/actions/question.action'
 import { usePathname, useRouter } from 'next/navigation'
 import { downvoteAnswer, upvoteAnswer } from '../../lib/actions/answer.action'
-import { saveQuestion } from '../../lib/actions/user.action'
+import { toggleSaveQuestion } from '../../lib/actions/user.action'
 
 
 interface Props {
@@ -35,7 +35,7 @@ const Votes = ({
 
   const handleSave = async(userId: string, itemId: string) => { 
     if (!userId) return 
-    await saveQuestion({ userId: JSON.parse(userId), questionId: JSON.parse(itemId), path: pathname })
+    await toggleSaveQuestion({ userId: JSON.parse(userId), questionId: JSON.parse(itemId), path: pathname })
   }
 
   const handleVote = async (action: string) => {

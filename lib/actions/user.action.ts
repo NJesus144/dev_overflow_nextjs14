@@ -106,19 +106,35 @@ export async function getAllUsers(params: GetAllUsersParams) {
   }
 }
 
-export async function saveQuestion(params: ToggleSaveQuestionParams) {
+export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
   try {
     const { userId, questionId, path } = params
 
-    const user = await User.findOne({ userId })
+    const user = await User.findById(userId)
 
-    await User.findByIdAndUpdate(
-      user._id,
-      { $addToSet: { saved: questionId } },
-      {
-        new: true,
-      },
-    )
+    if(!user) {
+      throw new Error('User not found')
+    }
+
+    const isQuestionSaved = user.saved.includes(questionId)
+
+    if(isQuestionSaved){
+      await User.findByIdAndUpdate(
+        user._id,
+        { $pull: { saved: questionId } },
+        {
+          new: true,
+        },
+      )
+    }else {
+      await User.findByIdAndUpdate(
+        user._id,
+        { $addToSet: { saved: questionId } },
+        {
+          new: true,
+        },
+      )
+    }
 
     revalidatePath(path)
   } catch (error) {
