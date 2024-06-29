@@ -3,8 +3,9 @@
 import Image from 'next/image'
 import React from 'react'
 import { formatAndDivideNumber } from '../../lib/utils'
-import { downvoteAnswer, downvoteQuestion, upvoteAnswer, upvoteQuestion } from '../../lib/actions/question.action'
+import { downvoteQuestion, upvoteQuestion } from '../../lib/actions/question.action'
 import { usePathname, useRouter } from 'next/navigation'
+import { downvoteAnswer, upvoteAnswer } from '../../lib/actions/answer.action'
 
 
 interface Props {
