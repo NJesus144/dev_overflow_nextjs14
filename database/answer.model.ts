@@ -4,7 +4,7 @@ export interface IAnswer extends Document {
   author: Schema.Types.ObjectId;
   question: Schema.Types.ObjectId;
   upvotes: Schema.Types.ObjectId[];
-  dowvotes: Schema.Types.ObjectId[];
+  downvotes: Schema.Types.ObjectId[];
   createdAt: Date;
 }
 
@@ -13,7 +13,7 @@ const AnswerSchema = new Schema({
   question: [{ type: Schema.Types.ObjectId, ref: "Question", required: true }],
   content: { type: String, required: true },
   upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  dowvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   createdAt: { type: Date, default: Date.now },
 });
 
