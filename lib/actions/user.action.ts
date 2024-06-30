@@ -12,7 +12,6 @@ import {
 } from './shared.types'
 import { revalidatePath } from 'next/cache'
 import Question from '@/database/question.model'
-import console from 'console'
 import Tag from '../../database/tag.model'
 import { FilterQuery } from 'mongoose'
 
