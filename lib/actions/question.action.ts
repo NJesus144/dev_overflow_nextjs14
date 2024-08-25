@@ -1,4 +1,5 @@
 'use server'
+import { SearchParams } from './shared.types.d';
 
 import { connectToDatabase } from '../mogoose'
 import Question from '@/database/question.model'
@@ -159,4 +160,3 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     throw error
   }
 }
-
