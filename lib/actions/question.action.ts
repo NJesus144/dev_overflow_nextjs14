@@ -1,17 +1,19 @@
-'use server'
-import { SearchParams } from './shared.types.d';
+"use server"
+import { DeleteQuestionParams, SearchParams } from "./shared.types.d"
 
-import { connectToDatabase } from '../mogoose'
-import Question from '@/database/question.model'
-import Tag from '@/database/tag.model'
+import { connectToDatabase } from "../mogoose"
+import Question from "@/database/question.model"
+import Tag from "@/database/tag.model"
 import {
   CreateQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
   QuestionVoteParams,
-} from './shared.types'
-import User from '@/database/user.model'
-import { revalidatePath } from 'next/cache'
+} from "./shared.types"
+import User from "@/database/user.model"
+import { revalidatePath } from "next/cache"
+import Answer from "../../database/answer.model"
+import Interaction from "../../database/interaction.model"
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
@@ -19,10 +21,10 @@ export async function getQuestions(params: GetQuestionsParams) {
 
     const questions = await Question.find({})
       .populate({
-        path: 'tags',
+        path: "tags",
         model: Tag,
       })
-      .populate({ path: 'author', model: User })
+      .populate({ path: "author", model: User })
       .sort({ createdAt: -1 })
 
     return { questions }
@@ -50,7 +52,7 @@ export async function createQuestion(params: CreateQuestionParams) {
     // Create the tags or get them if they already exist
     for (const tag of tags) {
       const existingTag = await Tag.findOneAndUpdate(
-        { name: { $regex: new RegExp(`^${tag}$`, 'i') } },
+        { name: { $regex: new RegExp(`^${tag}$`, "i") } },
         { $setOnInsert: { name: tag }, $push: { questions: question._id } },
         { upsert: true, new: true },
       )
@@ -77,11 +79,11 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
     const { questionId } = params
 
     const question = await Question.findById(questionId)
-      .populate({ path: 'tags', model: Tag, select: '_id name' })
+      .populate({ path: "tags", model: Tag, select: "_id name" })
       .populate({
-        path: 'author',
+        path: "author",
         model: User,
-        select: '_id clerkId name picture',
+        select: "_id clerkId name picture",
       })
 
     return question
@@ -115,7 +117,7 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
     })
 
     if (!question) {
-      throw new Error('Question not found')
+      throw new Error("Question not found")
     }
 
     // Increment author´s reputation
@@ -150,7 +152,7 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     })
 
     if (!question) {
-      throw new Error('Question not found')
+      throw new Error("Question not found")
     }
 
     // Increment author´s reputation
@@ -158,5 +160,25 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
   } catch (error) {
     console.log(error)
     throw error
+  }
+}
+
+export async function deleteQuestion(params: DeleteQuestionParams) {
+  try {
+    connectToDatabase()
+
+    const { questionId, path } = params
+
+    await Question.deleteOne({ _id: questionId })
+    await Answer.deleteMany({ question: questionId })
+    await Interaction.deleteMany({ question: questionId })
+    await Tag.updateMany(
+      { questions: questionId },
+      { $pull: { questions: questionId } },
+    )
+
+    revalidatePath(path)
+  } catch (error) {
+    console.log(error)
   }
 }

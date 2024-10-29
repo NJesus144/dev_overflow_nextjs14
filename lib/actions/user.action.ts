@@ -4,6 +4,7 @@ import User from '@/database/user.model'
 import { connectToDatabase } from '../mogoose'
 import {
   CreateUserParams,
+  DeleteQuestionParams,
   DeleteUserParams,
   GetAllUsersParams,
   GetSavedQuestionsParams,
@@ -244,7 +245,7 @@ export async function getUserAnswers(params: GetUserStatsParams) {
       .populate('author', '_id clerkId name picture')
       .populate('question', '_id title')
 
-     return { totalAnswers, answers: userAnswer }
+    return { totalAnswers, answers: userAnswer }
   } catch (error) {
     console.log(error)
     throw error
