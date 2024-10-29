@@ -1,26 +1,29 @@
-import Link from "next/link";
-import React from "react";
-import RenderTag from "../RenderTag";
-import Metric from "../Metric";
-import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
+import Link from 'next/link'
+import React from 'react'
+import RenderTag from '../RenderTag'
+import Metric from '../Metric'
+import { formatAndDivideNumber, getTimestamp } from '@/lib/utils'
+import { SignedIn } from '@clerk/nextjs'
+import EditDeleteAction from '../EditDeleteAction'
 
 interface QuestionProps {
-  _id: string;
-  title: string;
+  _id: string
+  title: string
   tags: {
-    _id: string;
-    name: string;
-  }[];
+    _id: string
+    name: string
+  }[]
   author: {
-    _id: string;
-    name: string;
-    picture: string;
-  };
-  upvotes: string[];
-  views: number;
-  answers: Array<object>;
-  createdAt: Date;
-  clerkId?: string | null;
+    _id: string
+    name: string
+    picture: string
+    clerkId: string
+  }
+  upvotes: string[]
+  views: number
+  answers: Array<object>
+  createdAt: Date
+  clerkId?: string | null
 }
 
 const QuestionCard = ({
@@ -32,7 +35,9 @@ const QuestionCard = ({
   views,
   answers,
   createdAt,
+  clerkId,
 }: QuestionProps) => {
+  const showActionButtons = clerkId && clerkId === author.clerkId
 
   return (
     <div className="card-wrapper rounded-[10] p-9 sm:px-11">
@@ -48,7 +53,11 @@ const QuestionCard = ({
           </Link>
         </div>
 
-        {/* If signed in add edit delete actions */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteAction type="Question" itemId={JSON.stringify(_id)} />
+          )}
+        </SignedIn>
       </div>
 
       <div className="mt-3.5 flex flex-wrap gap-2">
@@ -92,7 +101,7 @@ const QuestionCard = ({
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default QuestionCard;
+export default QuestionCard
