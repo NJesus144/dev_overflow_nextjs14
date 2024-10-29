@@ -1,5 +1,9 @@
 "use server"
-import { DeleteQuestionParams, SearchParams } from "./shared.types.d"
+import {
+  DeleteQuestionParams,
+  EditQuestionParams,
+  SearchParams,
+} from "./shared.types.d"
 
 import { connectToDatabase } from "../mogoose"
 import Question from "@/database/question.model"
@@ -176,6 +180,29 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
       { questions: questionId },
       { $pull: { questions: questionId } },
     )
+
+    revalidatePath(path)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function editQuestion(params: EditQuestionParams) {
+  try {
+    connectToDatabase()
+
+    const { questionId, title, content, path } = params
+
+    const question =
+      await Question.findByIdAndUpdate(questionId).populate("tags")
+
+    if (!question) {
+      throw new Error("Question not found")
+    }
+    question.title = title
+    question.content = content
+
+    await question.save()
 
     revalidatePath(path)
   } catch (error) {
