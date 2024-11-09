@@ -2,7 +2,7 @@ import React from 'react'
 import { auth } from '@clerk/nextjs'
 import { getUserById } from '@/lib/actions/user.action'
 import { ParamsProps } from '@/types'
-import Profile from '../../../../components/forms/Profile'
+import Profile from '@/components/forms/Profile'
 
 const page = async ({ params }: ParamsProps) => {
   const { userId } = auth()
