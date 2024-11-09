@@ -1,15 +1,15 @@
-'use server'
+"use server"
 
-import User from '@/database/user.model'
-import { connectToDatabase } from '../mogoose'
+import User from "@/database/user.model"
+import { connectToDatabase } from "../mogoose"
 import {
   GetAllTagsParams,
   GetQuestionsByTagIdParams,
   GetTopInteractedTagsParams,
-} from './shared.types'
-import Tag, { ITag } from '@/database/tag.model'
-import { FilterQuery } from 'mongoose'
-import Question from '../../database/question.model'
+} from "./shared.types"
+import Tag, { ITag } from "@/database/tag.model"
+import { FilterQuery } from "mongoose"
+import Question from "../../database/question.model"
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
@@ -19,13 +19,13 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
 
     const user = await User.findById(userId)
 
-    if (!user) throw new Error('User not found')
+    if (!user) throw new Error("User not found")
     // find interactions for the user and group by tags...
 
     return [
-      { _id: '1', name: 'tag' },
-      { _id: '2', name: 'tag' },
-      { _id: '3', name: 'tag' },
+      { _id: "1", name: "tag" },
+      { _id: "2", name: "tag" },
+      { _id: "3", name: "tag" },
     ]
   } catch (error) {
     console.log(error)
@@ -57,22 +57,22 @@ export async function getQuestionByTagId(params: GetQuestionsByTagIdParams) {
     const tagFilter: FilterQuery<ITag> = { _id: tagId }
 
     const tag = await Tag.findOne(tagFilter).populate({
-      path: 'questions',
+      path: "questions",
       model: Question,
       match: searchQuery
-        ? { title: { $regex: searchQuery, $options: 'i' } }
+        ? { title: { $regex: searchQuery, $options: "i" } }
         : {},
       options: {
         sort: { createdAt: -1 },
       },
       populate: [
-        { path: 'tags', model: Tag, select: '_id name' },
-        { path: 'author', model: User, select: '_id clerkId name picture' },
+        { path: "tags", model: Tag, select: "_id name" },
+        { path: "author", model: User, select: "_id clerkId name picture" },
       ],
     })
 
     if (!tag) {
-      throw new Error('Tag not found')
+      throw new Error("Tag not found")
     }
 
     const questions = tag.questions
@@ -80,5 +80,27 @@ export async function getQuestionByTagId(params: GetQuestionsByTagIdParams) {
     return { tagTitle: tag.name, questions }
   } catch (error) {
     console.log(error)
+  }
+}
+
+export async function getTopPopularTags() {
+  try {
+    connectToDatabase()
+
+    const popularTags = await Tag.aggregate([
+      {
+        $project: {
+          name: 1,
+          numberOfQuestions: { $size: "$questions" },
+        },
+      },
+      { $sort: { numberOfQuestions: -1 } },
+      { $limit: 5 },
+    ])
+
+    return popularTags
+  } catch (error) {
+    console.log(error)
+    throw error
   }
 }
