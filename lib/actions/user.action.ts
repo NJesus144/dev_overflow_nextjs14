@@ -100,9 +100,17 @@ export async function getAllUsers(params: GetAllUsersParams) {
   try {
     connectToDatabase()
 
-    // const { page = 1, pageSize = 20, filter, searchQuery } = params;
+    const { searchQuery } = params
+    const query: FilterQuery<typeof User> = {}
 
-    const users = await User.find({}).sort({ createdAt: -1 })
+    if (searchQuery) {
+      query.$or = [
+        { name: { $regex: new RegExp(searchQuery, "i") } },
+        { username: { $regex: new RegExp(searchQuery, "i") } },
+      ]
+    }
+
+    const users = await User.find(query).sort({ createdAt: -1 })
 
     return { users }
   } catch (error) {
@@ -152,7 +160,7 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
     connectToDatabase()
 
-    const { clerkId, filter, page = 1, pageSize = 10, searchQuery } = params
+    const { clerkId, searchQuery } = params
 
     const query: FilterQuery<typeof Question> = searchQuery
       ? { title: { $regex: new RegExp(searchQuery, "i") } }
