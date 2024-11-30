@@ -28,7 +28,6 @@ const LocalSearchbar = ({
   const query = searchParams.get("TEST")
 
   const [search, setSearch] = useState(query || '')
-  console.log(search)
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (search) {

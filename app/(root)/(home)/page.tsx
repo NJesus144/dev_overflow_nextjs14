@@ -11,9 +11,13 @@ import Link from "next/link";
 import { SearchParamsProps } from "@/types";
 
 export default async function Home({ searchParams }: SearchParamsProps) {
+
   const result = await getQuestions({
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
   })
+
+  // Fetch Recomended Question
 
   return (
     <>
