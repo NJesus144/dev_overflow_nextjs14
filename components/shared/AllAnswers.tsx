@@ -13,7 +13,7 @@ interface Props {
   userId: string;
   totalAnswers: number;
   page?: number;
-  filter?: number;
+  filter?: string;
 }
 
 const AllAnswers = async ({
@@ -24,7 +24,11 @@ const AllAnswers = async ({
   filter,
 }: Props) => {
 
-  const result = await getAnswers({ questionId });
+  const result = await getAnswers({
+    questionId,
+    page: page ? +page : 1,
+    sortBy: filter
+  });
 
   return (
     <div className="mt-11">
@@ -60,13 +64,13 @@ const AllAnswers = async ({
                 </Link>
                 <div className="flex justify-end">
                   <Votes
-                   type="Answer"
-                   itemId={JSON.stringify(answer._id)}
-                   userId={JSON.stringify(userId)}
-                   upvotes={answer.upvotes.length}
-                   hasupVoted={answer.upvotes.includes(userId)}
-                   downvotes={answer.downvotes.length}
-                   hasdownVoted={answer.downvotes.includes(userId)}
+                    type="Answer"
+                    itemId={JSON.stringify(answer._id)}
+                    userId={JSON.stringify(userId)}
+                    upvotes={answer.upvotes.length}
+                    hasupVoted={answer.upvotes.includes(userId)}
+                    downvotes={answer.downvotes.length}
+                    hasdownVoted={answer.downvotes.includes(userId)}
                   />
                 </div>
               </div>
