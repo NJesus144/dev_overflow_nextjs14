@@ -7,11 +7,14 @@ import Link from "next/link";
 
 import React from "react";
 import { SearchParamsProps } from "@/types";
+import Pagination from "@/components/shared/Pagination";
+import Page from "../ask-question/page";
 
-const Page = async ({ searchParams }: SearchParamsProps) => {
+export default async function Community({ searchParams }: SearchParamsProps) {
   const result = await getAllUsers({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
   });
 
   return (
@@ -43,8 +46,13 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
           </div>
         )}
       </section>
+      <div className="mt-10">
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
+      </div>
     </>
   );
 };
 
-export default Page;
