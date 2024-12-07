@@ -8,7 +8,6 @@ import Link from "next/link";
 import React from "react";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
-import Page from "../ask-question/page";
 
 export default async function Community({ searchParams }: SearchParamsProps) {
   const result = await getAllUsers({
