@@ -84,7 +84,7 @@ const Votes = ({
         })
       }
       // todo: show a toast message
-      return
+      // return
     }
 
   }
