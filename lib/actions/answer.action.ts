@@ -10,8 +10,6 @@ import { connectToDatabase } from "../mogoose"
 import Answer from "@/database/answer.model"
 import { revalidatePath } from "next/cache"
 import Question from "@/database/question.model"
-import User from "@/database/user.model"
-import { Tag } from "lucide-react"
 import Interaction from "../../database/interaction.model"
 
 export async function createAnswer(params: CreateAnswerParams) {

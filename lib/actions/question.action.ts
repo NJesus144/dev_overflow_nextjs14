@@ -1,15 +1,11 @@
 "use server"
 
-import {
-  DeleteQuestionParams,
-  EditQuestionParams,
-  SearchParams,
-} from "./shared.types.d"
-
 import { connectToDatabase } from "../mogoose"
 import Question from "@/database/question.model"
 import Tag from "@/database/tag.model"
 import {
+  DeleteQuestionParams,
+  EditQuestionParams,
   CreateQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,

@@ -62,7 +62,7 @@ const Votes = ({
         })
       }
       // todo: show a toast message
-      return
+      // return
     }
 
     if (action === 'downvote') {
