@@ -2,12 +2,12 @@
 
 import Image from 'next/image'
 import React, { useEffect } from 'react'
-import { formatAndDivideNumber } from '../../lib/utils'
-import { downvoteQuestion, upvoteQuestion } from '../../lib/actions/question.action'
+import { formatAndDivideNumber } from '@/lib/utils'
+import { downvoteQuestion, upvoteQuestion } from '@/lib/actions/question.action'
 import { usePathname, useRouter } from 'next/navigation'
-import { downvoteAnswer, upvoteAnswer } from '../../lib/actions/answer.action'
-import { toggleSaveQuestion } from '../../lib/actions/user.action'
-import { viewQuestion } from '../../lib/actions/interaction.action'
+import { downvoteAnswer, upvoteAnswer } from '@/lib/actions/answer.action'
+import { toggleSaveQuestion } from '@/lib/actions/user.action'
+import { viewQuestion } from '@/lib/actions/interaction.action'
 
 
 interface Props {
@@ -86,7 +86,6 @@ const Votes = ({
       // todo: show a toast message
       // return
     }
-
   }
 
   useEffect(() => {
