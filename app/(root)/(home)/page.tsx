@@ -1,25 +1,22 @@
-import HomeFilter from "@/components/home/HomeFilter";
-import QuestionCard from "@/components/shared/cards/QuestionCard";
-import Filter from "@/components/shared/Filter";
-import NoResult from "@/components/shared/NoResult";
+import HomeFilter from "@/components/home/HomeFilter"
+import QuestionCard from "@/components/shared/cards/QuestionCard"
+import Filter from "@/components/shared/Filter"
+import NoResult from "@/components/shared/NoResult"
 
-import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
-import { Button } from "@/components/ui/button";
-import { HomePageFilters } from "@/constants/filters";
-import { getQuestions } from "@/lib/actions/question.action";
-import Link from "next/link";
-import { SearchParamsProps } from "@/types";
-import Pagination from "@/components/shared/Pagination";
+import LocalSearchbar from "@/components/shared/search/LocalSearchbar"
+import { Button } from "@/components/ui/button"
+import { HomePageFilters } from "@/constants/filters"
+import { getQuestions } from "@/lib/actions/question.action"
+import Link from "next/link"
+import { SearchParamsProps } from "@/types"
+import Pagination from "@/components/shared/Pagination"
 
 export default async function Home({ searchParams }: SearchParamsProps) {
-
   const result = await getQuestions({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
     page: searchParams.page ? +searchParams.page : 1,
   })
-
-  // Fetch Recomended Question
 
   return (
     <>
@@ -79,5 +76,5 @@ export default async function Home({ searchParams }: SearchParamsProps) {
         />
       </div>
     </>
-  );
+  )
 }
