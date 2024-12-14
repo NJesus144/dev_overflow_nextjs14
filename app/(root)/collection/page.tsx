@@ -9,6 +9,11 @@ import { getSavedQuestions } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: 'Collections | Dev Overflow',
+}
 
 export default async function Collection({ searchParams }: SearchParamsProps) {
   const { userId } = auth();

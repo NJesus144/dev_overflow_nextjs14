@@ -8,6 +8,11 @@ import Link from "next/link"
 import React from "react"
 import { SearchParamsProps } from "@/types"
 import Pagination from "@/components/shared/Pagination"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: 'Community | Dev Overflow',
+}
 
 export default async function Community({ searchParams }: SearchParamsProps) {
   const result = await getAllUsers({
