@@ -45,7 +45,6 @@ const Votes = ({
   }
 
   const handleVote = async (action: string) => {
-
     if (!userId) {
       return toast({
         title: 'Please log in',
