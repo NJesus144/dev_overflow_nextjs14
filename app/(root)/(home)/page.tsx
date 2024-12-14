@@ -10,6 +10,7 @@ import { getQuestions } from "@/lib/actions/question.action"
 import Link from "next/link"
 import { SearchParamsProps } from "@/types"
 import Pagination from "@/components/shared/Pagination"
+import Loading from "./loading"
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const result = await getQuestions({

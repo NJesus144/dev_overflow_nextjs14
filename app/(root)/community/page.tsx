@@ -1,20 +1,20 @@
-import Filter from "@/components/shared/Filter";
-import UserCard from "@/components/shared/cards/UserCard";
-import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
-import { UserFilters } from "@/constants/filters";
-import { getAllUsers } from "@/lib/actions/user.action";
-import Link from "next/link";
+import Filter from "@/components/shared/Filter"
+import UserCard from "@/components/shared/cards/UserCard"
+import LocalSearchbar from "@/components/shared/search/LocalSearchbar"
+import { UserFilters } from "@/constants/filters"
+import { getAllUsers } from "@/lib/actions/user.action"
+import Link from "next/link"
 
-import React from "react";
-import { SearchParamsProps } from "@/types";
-import Pagination from "@/components/shared/Pagination";
+import React from "react"
+import { SearchParamsProps } from "@/types"
+import Pagination from "@/components/shared/Pagination"
 
 export default async function Community({ searchParams }: SearchParamsProps) {
   const result = await getAllUsers({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
     page: searchParams.page ? +searchParams.page : 1,
-  });
+  })
 
   return (
     <>
@@ -52,6 +52,5 @@ export default async function Community({ searchParams }: SearchParamsProps) {
         />
       </div>
     </>
-  );
-};
-
+  )
+}
