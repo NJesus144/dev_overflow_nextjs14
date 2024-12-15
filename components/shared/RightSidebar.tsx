@@ -1,9 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import RenderTag from "./RenderTag";
-import { getHotQuestions } from "@/lib/actions/question.action";
-import { getTopPopularTags } from "../../lib/actions/tag.action";
+import Image from "next/image"
+import Link from "next/link"
+import React from "react"
+import RenderTag from "./RenderTag"
+import { getHotQuestions } from "@/lib/actions/question.action"
+import { getTopPopularTags } from "../../lib/actions/tag.action"
 
 const RightSidebar = async () => {
   const hotQuestions = await getHotQuestions()
@@ -50,7 +50,7 @@ const RightSidebar = async () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default RightSidebar;
+export default RightSidebar

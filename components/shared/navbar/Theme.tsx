@@ -1,19 +1,19 @@
-"use client";
-import React from "react";
+"use client"
+import React from "react"
 
-import { useTheme } from "@/context/ThemeProvider";
+import { useTheme } from "@/context/ThemeProvider"
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from "@/components/ui/menubar";
-import Image from "next/image";
-import { themes } from "@/constants";
+} from "@/components/ui/menubar"
+import Image from "next/image"
+import { themes } from "@/constants"
 
 const Theme = () => {
-  const { mode, setMode } = useTheme();
+  const { mode, setMode } = useTheme()
 
   return (
     <Menubar className="relative border-none bg-transparent shadow-none">
@@ -43,12 +43,12 @@ const Theme = () => {
               key={item.value}
               className="flex cursor-pointer items-center gap-4 px-2.5 py-2 focus:bg-light-800 dark:focus:bg-dark-400"
               onClick={() => {
-                setMode(item.value);
+                setMode(item.value)
 
                 if (item.value !== "system") {
-                  localStorage.theme = item.value;
+                  localStorage.theme = item.value
                 } else {
-                  localStorage.removeItem("theme");
+                  localStorage.removeItem("theme")
                 }
               }}
             >
@@ -60,10 +60,11 @@ const Theme = () => {
                 className={`${mode === item.value && "active-theme"}`}
               />
               <p
-                className={`body-semibold text-light-500 ${mode === item.value
-                  ? " text-primary-500"
-                  : "text-dark100_light900"
-                  }`}
+                className={`body-semibold text-light-500 ${
+                  mode === item.value
+                    ? " text-primary-500"
+                    : "text-dark100_light900"
+                }`}
               >
                 {item.label}
               </p>
@@ -72,7 +73,7 @@ const Theme = () => {
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
-  );
-};
+  )
+}
 
-export default Theme;
+export default Theme

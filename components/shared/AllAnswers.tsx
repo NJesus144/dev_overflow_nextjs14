@@ -1,20 +1,20 @@
-import { getAnswers } from "@/lib/actions/answer.action";
-import React from "react";
-import Filter from "./Filter";
-import { AnswerFilters } from "@/constants/filters";
-import Link from "next/link";
-import Image from "next/image";
-import { getTimestamp } from "@/lib/utils";
-import ParseHTML from "./ParseHTML";
-import Votes from "./Votes";
-import Pagination from "./Pagination";
+import { getAnswers } from "@/lib/actions/answer.action"
+import React from "react"
+import Filter from "./Filter"
+import { AnswerFilters } from "@/constants/filters"
+import Link from "next/link"
+import Image from "next/image"
+import { getTimestamp } from "@/lib/utils"
+import ParseHTML from "./ParseHTML"
+import Votes from "./Votes"
+import Pagination from "./Pagination"
 
 interface Props {
-  questionId: string;
-  userId: string;
-  totalAnswers: number;
-  page?: number;
-  filter?: string;
+  questionId: string
+  userId: string
+  totalAnswers: number
+  page?: number
+  filter?: string
 }
 
 const AllAnswers = async ({
@@ -24,12 +24,11 @@ const AllAnswers = async ({
   page,
   filter,
 }: Props) => {
-
   const result = await getAnswers({
     questionId,
     page: page ? +page : 1,
-    sortBy: filter
-  });
+    sortBy: filter,
+  })
 
   return (
     <div className="mt-11">
@@ -86,7 +85,7 @@ const AllAnswers = async ({
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AllAnswers;
+export default AllAnswers

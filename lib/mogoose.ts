@@ -1,27 +1,27 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
-let isConnected: boolean = false;
+let isConnected: boolean = false
 
 export const connectToDatabase = async () => {
-  mongoose.set('strictQuery', true);
+  mongoose.set("strictQuery", true)
 
   if (!process.env.MONGODB_URL) {
-    return console.log("MMISSING MONGODB_URL");
+    return console.log("MMISSING MONGODB_URL")
   }
 
   if (isConnected) {
-    return console.log("MongoDB is already connected");
+    return console.log("MongoDB is already connected")
   }
 
   try {
     await mongoose.connect(process.env.MONGODB_URL, {
       dbName: "nextoverflowdb",
-    });
+    })
 
-    isConnected = true;
+    isConnected = true
 
-    console.log("MongoDB is connected");
+    console.log("MongoDB is connected")
   } catch (error) {
-    console.log("MongoDB connection failed", error);
+    console.log("MongoDB connection failed", error)
   }
-};
+}

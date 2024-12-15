@@ -1,7 +1,7 @@
-import { getUserAnswers } from '../../lib/actions/user.action'
-import { SearchParamsProps } from '../../types'
-import AnswerCard from './cards/AnswerCard'
-import Pagination from './Pagination'
+import { getUserAnswers } from "../../lib/actions/user.action"
+import { SearchParamsProps } from "../../types"
+import AnswerCard from "./cards/AnswerCard"
+import Pagination from "./Pagination"
 
 interface AnswersTabProps extends SearchParamsProps {
   userId: string
@@ -28,8 +28,6 @@ const AnswersTab = async ({
           question={item.question[0]}
           author={item.author}
           upvotes={item.upvotes}
-          // views={item.views}
-          // answers={item.answers}
           createdAt={item.createdAt}
         />
       ))}

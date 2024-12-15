@@ -1,31 +1,31 @@
-import QuestionCard from "@/components/shared/cards/QuestionCard";
-import Filter from "@/components/shared/Filter";
-import NoResult from "@/components/shared/NoResult";
+import QuestionCard from "@/components/shared/cards/QuestionCard"
+import Filter from "@/components/shared/Filter"
+import NoResult from "@/components/shared/NoResult"
 
-import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
-import { QuestionFilters } from "@/constants/filters";
+import LocalSearchbar from "@/components/shared/search/LocalSearchbar"
+import { QuestionFilters } from "@/constants/filters"
 
-import { getSavedQuestions } from "@/lib/actions/user.action";
-import { auth } from "@clerk/nextjs";
-import { SearchParamsProps } from "@/types";
-import Pagination from "@/components/shared/Pagination";
+import { getSavedQuestions } from "@/lib/actions/user.action"
+import { auth } from "@clerk/nextjs"
+import { SearchParamsProps } from "@/types"
+import Pagination from "@/components/shared/Pagination"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: 'Collections | Dev Overflow',
+  title: "Collections | Dev Overflow",
 }
 
 export default async function Collection({ searchParams }: SearchParamsProps) {
-  const { userId } = auth();
+  const { userId } = auth()
 
-  if (!userId) return null;
+  if (!userId) return null
 
   const result = await getSavedQuestions({
     clerkId: userId,
     searchQuery: searchParams.q,
     filter: searchParams.filter,
     page: searchParams.page ? +searchParams.page : 1,
-  });
+  })
 
   return (
     <>
@@ -75,5 +75,5 @@ export default async function Collection({ searchParams }: SearchParamsProps) {
         />
       </div>
     </>
-  );
+  )
 }

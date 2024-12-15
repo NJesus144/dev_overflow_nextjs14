@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/input"
 
-import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
-import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
-import GlobalResult from "./GlobalResult";
+import Image from "next/image"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import React, { useEffect, useRef, useState } from "react"
+import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils"
+import GlobalResult from "./GlobalResult"
 
 const GlobalSearch = () => {
   const router = useRouter()
@@ -16,17 +16,18 @@ const GlobalSearch = () => {
 
   const query = searchParams.get("q")
 
-  const [search, setSearch] = useState(query || '')
+  const [search, setSearch] = useState(query || "")
   const [isOpen, setIsOpen] = useState(false)
-
 
   useEffect(() => {
     const handleOutsideClick = (event: any) => {
-      if (searchContainerRef.current &&
+      if (
+        searchContainerRef.current &&
         // @ts-ignore
-        !searchContainerRef.current.contains(event.target)) {
+        !searchContainerRef.current.contains(event.target)
+      ) {
         setIsOpen(false)
-        setSearch('')
+        setSearch("")
       }
     }
     setIsOpen(false)
@@ -42,8 +43,8 @@ const GlobalSearch = () => {
       if (search) {
         const newUrl = formUrlQuery({
           params: searchParams.toString(),
-          key: 'global',
-          value: search
+          key: "global",
+          value: search,
         })
 
         router.push(newUrl, { scroll: false })
@@ -51,7 +52,7 @@ const GlobalSearch = () => {
         if (query) {
           const newUrl = removeKeysFromQuery({
             params: searchParams.toString(),
-            keysToRemove: ['global', 'type']
+            keysToRemove: ["global", "type"],
           })
 
           router.push(newUrl, { scroll: false })
@@ -63,8 +64,10 @@ const GlobalSearch = () => {
   }, [search, router, pathname, searchParams, query])
 
   return (
-    <div className="relative w-full max-w-[600px] max-lg:hidden"
-      ref={searchContainerRef}>
+    <div
+      className="relative w-full max-w-[600px] max-lg:hidden"
+      ref={searchContainerRef}
+    >
       <div className="background-light800_darkgradient relative flex min-h-[56px] grow items-center gap-1 rounded-xl px-4">
         <Image
           src="/assets/icons/search.svg"
@@ -79,7 +82,7 @@ const GlobalSearch = () => {
           onChange={(e) => {
             setSearch(e.target.value)
             if (!isOpen) setIsOpen(true)
-            if (e.target.value === '' && isOpen) setIsOpen(false)
+            if (e.target.value === "" && isOpen) setIsOpen(false)
           }}
           placeholder="Search globally"
           className="paragraph-regular no-focus placeholder text-dark400_light700 border-none shadow-none outline-none bg-transparent"
@@ -87,7 +90,7 @@ const GlobalSearch = () => {
       </div>
       {isOpen && <GlobalResult />}
     </div>
-  );
-};
+  )
+}
 
-export default GlobalSearch;
+export default GlobalSearch
