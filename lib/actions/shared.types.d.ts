@@ -1,6 +1,4 @@
-import { Country } from "./../../types/index.d"
 import { Schema } from "mongoose"
-
 import { IUser } from "@/mongodb"
 
 export interface CreateAnswerParams {
@@ -57,13 +55,6 @@ export interface GetQuestionsParams {
   pageSize?: number
   searchQuery?: string
   filter?: string
-}
-
-export interface GetJobsParams {
-  searchQuery?: string
-  country?: string
-  pageSize?: number
-  page?: number
 }
 
 export interface CreateQuestionParams {
