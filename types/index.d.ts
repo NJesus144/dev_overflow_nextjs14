@@ -18,6 +18,7 @@ export interface Job {
   job_city?: string;
   job_state?: string;
   job_country?: string;
+  job_salary?: string;
 }
 
 export interface Country {
